@@ -1,0 +1,31 @@
+{% extends 'ssa/base.html' %}
+{% block title%}Game{% endblock %}
+{% block content %}
+
+<h1>Game # {{game.id}} </h1>
+
+{% if user.is_authenticated %}
+<h2>Authenticated</h2>
+{% else %}
+<h2>Not Authenticated</h2>
+{% endif %}
+{% if game.get_players %}
+<u1>
+    </br>
+    {% for player in game.get_players %}
+    <h3>Player: {{player.get_name}}</h3>
+    <a>status: {{player.status}}</a>
+    <br/>
+    <a>Target: {{player.target.get_name}}</a>
+    <br/>
+    <a>Game: {{player.game.id}}</a>
+    <br/>
+    <a>profile: {{player.profile.username}}</a>
+    <br/>
+    <br/>
+    {% endfor %}
+</u1>
+{% else %}
+<h3>no players found</h3>
+{% endif %}
+{% endblock %}
