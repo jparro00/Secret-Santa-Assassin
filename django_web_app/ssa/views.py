@@ -7,9 +7,10 @@ from django.views.generic import (
     DetailView,
     CreateView,
     UpdateView,
-    DeleteView
+    DeleteView,
 )
 from .models import Game, Player
+from .forms import JoinGame
 import operator
 from django.urls import reverse_lazy
 from django.contrib.staticfiles.views import serve
@@ -25,3 +26,20 @@ class PlayerDetailView(DetailView):
     model = Game
     template_name = 'ssa/player.html'
 
+class HomeView(ListView):
+    model = Game
+    template_name = 'ssa/home.html'  # <app>/<model>_<viewtype>.html
+
+
+def join(request):
+    if request.method == "POST":
+        # Get the posted form
+        MyJoinForm = JoinGame(request.POST)
+
+        if MyJoinForm.is_valid():
+            game_id = MyJoinForm.cleaned_data['game_id']
+            game = Game.objects.get(game_id)
+    else:
+        MyJoinForm = JoinGame()
+
+    return render(request, 'ssa/game.html', {"game": game})

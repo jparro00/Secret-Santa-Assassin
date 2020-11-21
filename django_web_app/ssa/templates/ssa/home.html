@@ -1,0 +1,43 @@
+{% extends 'ssa/base.html' %}
+{% block title%}Secret Santa Assassin{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'ssa/main.css' %}">
+{% if user.is_authenticated %}
+
+{% load ssa_extras %}
+
+<div class="container my-container">
+    <div class="row my-row">
+        <div class="container">
+            <div class="button">test</div>
+            <form action="/ssa/game/1" method="get">
+                <input type="submit" value="Join Game:">
+                <input type="text" id="game_id" name="game_id">
+            </form>
+            <br/>
+
+            <form action="/ssa/game/1" method="get">
+                <input type="submit" value="Create Game">
+            </form>
+            <br/>
+            <form action="/ssa/game/1" method="get">
+                <input type="submit" value="How to Play">
+            </form>
+            <br/>
+
+        </div>
+    </div>
+    <div class="row my-row">
+        <div class="col my-col">Col1</div>
+        <div class="col my-col">Col2</div>
+    </div>
+</div>
+
+
+
+
+{% else %}
+<h2>Please Login</h2>
+{% endif %}
+{% endblock %}
