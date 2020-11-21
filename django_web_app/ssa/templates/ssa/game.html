@@ -2,10 +2,12 @@
 {% block title%}Game{% endblock %}
 {% block content %}
 
+{% load ssa_extras %}
 <h1>Game # {{game.id}} </h1>
 
 {% if user.is_authenticated %}
 <h2>Authenticated</h2>
+<h3>Logged in Player: {{ user|get_player:game.id }}</h3>
 {% else %}
 <h2>Not Authenticated</h2>
 {% endif %}
