@@ -7,5 +7,10 @@ def get_player(user, arg):
     player = query_set.get(game=arg)
     return player
 
+def get_player_icon(player):
+    profile = player.profile
+    return profile.profile.image.url
+
 
 register.filter('get_player', get_player)
+register.filter('get_player_icon', get_player_icon)

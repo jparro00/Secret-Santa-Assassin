@@ -82,3 +82,27 @@ a.article-title:hover {
 .account-heading {
   font-size: 2.5rem;
 }
+.account-sm {
+  height: 60px;
+  width: 60px;
+}
+.account-md {
+  height: 90px;
+  width: 90px;
+}
+.account-lg {
+  height: 120px;
+  width: 120px;
+}
+.icon-sm {
+  height: 60px;
+  width: 60px;
+}
+.icon-md {
+  height: 120px;
+  width: 120px;
+}
+.row{
+}
+.col{
+}
