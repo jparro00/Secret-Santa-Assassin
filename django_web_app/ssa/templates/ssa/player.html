@@ -37,7 +37,11 @@
     </div>
     <div class="pl-0 pr-0 col d-flex justify-content-center col-md-2">
         <h3>
+          {% if player.target.status == "Alive" %}
           <span class="badge badge-primary">{{player.target.get_name}}</span>
+          {% else %}
+          <span class="badge badge-danger">{{player.target.get_name}}</span>
+          {% endif %}
         </h3>
     </div>
   </div>
@@ -79,12 +83,21 @@
         <p>Your target will be notified of your assassination for confirmation.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary">Confirm</button>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Confirm</button>
+        </form>
       </div>
     </div>
   </div>
 </div>
+
+
+<h1>{{ question.question_text }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 {% endwith %}
 {% else %}

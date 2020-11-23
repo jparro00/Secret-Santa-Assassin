@@ -21,7 +21,10 @@ class Player(models.Model):
     profile = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
     def get_name(self):
-        return self.profile.username
+        name = self.profile.profile.handle
+        if name is "":
+            name = self.profile.username
+        return name
 
     def __str__(self):
         return self.get_name()

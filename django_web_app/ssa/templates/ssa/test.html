@@ -1,32 +1,9 @@
-<html>
-   <body>
+<div class="container">
+    <h1>Home</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Submit</button>
+    </form>
 
-      <form name = "form" action = "/ssa/"
-         method = "POST" >{% csrf_token %}
-
-         <div style = "max-width:470px;">
-            <center>
-               <input type = "text" style = "margin-left:20%;"
-                  placeholder = "Identifiant" name = "game_id" />
-            </center>
-         </div>
-
-         <br>
-
-
-         <div style = "max-width:470px;">
-            <center>
-
-               <button style = "border:0px; background-color:#4285F4; margin-top:8%;
-                  height:35px; width:80%;margin-left:19%;" type = "submit"
-                  value = "Login" >
-                  <strong>Login</strong>
-               </button>
-
-            </center>
-         </div>
-
-      </form>
-
-   </body>
-</html>
+    <h2>{{text}}</h2>
+</div>
