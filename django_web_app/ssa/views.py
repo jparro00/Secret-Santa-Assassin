@@ -73,10 +73,9 @@ class PlayerDetailView(LoginRequiredMixin, DetailView):
         elif constants.FORM_REJECT_REVERSE_CLAIM in request.POST and player.status == constants.PENDING_REVERSE:
             player.revive()
             player.save()
-        elif constants.FORM_CONFIRM_CLAIM in request.POST and player.status == constants.PENDING:
+        elif constants.FORM_CONFIRM_CLAIM in request.POST and (player.status == constants.PENDING or player.status == constants.PENDING_REVERSE):
             player.kill(assassin.id)
             player.save()
-
         return redirect('player-detail', pk)
 
 
