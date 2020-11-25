@@ -24,6 +24,12 @@
       <img id="rip" class="rip" src="/media/images/RIP.png">
     </div>
   </div>
+{% elif player.status == constants.WINNER %}
+<div class="row h-100 justify-content-center align-items-center ">
+  <div class="pl-0 pr-0 col d-flex justify-content-center">
+    <img id="winner" class="winner" src="/media/images/winner.png">
+  </div>
+</div>
 {% else %}
   {% if player.status == constants.PENDING %}
 
@@ -70,6 +76,42 @@
         $("#myModal").modal();
     });
     </script>
+  {% elif player.status == constants.PENDING_REVERSE %}
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <img class="rounded-circle account-sm" src="{{ target|get_player_icon }}">
+          <h4 class="modal-title">Pending Assassination Confirmation</h4>
+        </div>
+        <div class="modal-body">
+          <p>Your target, <b>{{ target.get_name }}</b>, has made an assassination claim against you.
+            <br/>
+            Please confirm.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <form method="post">
+            {% csrf_token %}
+            <button name="{{constants.FORM_REJECT_REVERSE_CLAIM}}" type="submit" class="btn btn-danger">False Claim</button>
+            <button name="{{constants.FORM_CONFIRM_CLAIM}}" type="submit" class="btn btn-primary">Confirm Assassination</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<script>
+    $(document).ready(function(){
+        $("#myModal").modal();
+    });
+    </script>
   {% endif %}
 
 
@@ -82,6 +124,10 @@
       </div>
       <div class="pl-0 pr-0 col d-flex justify-content-center col-md-2">
       </div>
+      {% if target.knows_assassin %}
+      <div class="pl-0 pr-0 col d-flex justify-content-center col-md-2">
+      </div>
+      {% endif %}
       <div class="pl-0 pr-0 col d-flex justify-content-center col-md-2">
           <h3>
             <span class="badge {{player.get_target.get_badge_class}}">{{player.get_target.get_name}}</span>
@@ -95,6 +141,11 @@
       <div class="pl-0 pr-0 col d-flex justify-content-center col-md-2">
         <img src="/media/icons/gun.svg" class="icon-sm">
       </div>
+      {% if target.knows_assassin %}
+      <div class="pl-0 pr-0 col d-flex justify-content-center col-md-2">
+        <img src="/media/icons/gun.svg" class="icon-sm flip">
+      </div>
+      {% endif %}
       <div class="pl-0 pr-0 col d-flex justify-content-center col-md-2">
         <img id="target-pic" class="rounded-circle account-md play" src="{{ player.target|get_player_icon }}"/>
       </div>
@@ -114,7 +165,7 @@
       <div class="row justify-content-center align-items-center">
         <div class="col d-flex justify-content-center">
           <button type="submit" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary">
-            <b>Assassination Attempt</b>
+            <b>Target Assassination Attempt</b>
           </button>
         </div>
       </div>
@@ -126,7 +177,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Confirm Assassination Attempt?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Confirm Assassination Attempt Against Target?</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -158,102 +209,85 @@
 
   {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-{% endif %}
-{% if player.knows_assassin %}
-
-  <div class="modal fade" id="reverseModal" tabindex="-1" role="dialog" aria-labelledby="reverseModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="reverseModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body container">
-          <div class="row">
-              <div class="col">
-                <p>Confirm Assassination?</p>
-                <p>Your target will be notified of your assassination for confirmation.</p>
-              </div>
+{% if player.get_target == player.get_assassin %}
+<div class="row justify-content-center">
+  <img id="show-down" class="show-down" src="/media/images/show_down.png">
+</div>
+<div class="row justify-content-center">
+  <h1>Show Down!</h1>
+</div>
+{% elif player.knows_assassin %}
+    <div class="modal fade" id="reverseModal" tabindex="-1" role="dialog" aria-labelledby="reverseModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="reverseModalLabel">Confirm Assassination Attempt Against Your Assassin?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
-            <div class="row">
-                <div class="col">
-                  <form method="post">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col form-check">
-                            <lable class="form-check-label">{{target.get_name}}</lable>
-                          <label>
-                            <input type="radio" name="test" class="form-check-input" value="small" checked>
-                            <img class="rounded-circle account-sm" src="{{target|get_player_icon}}">
-                          </label>
-                        </div>
-                      <div class="col form-check">
-                        <lable class="form-check-label">{{assassin.get_name}}</lable>
-                        <label>
-                          <input type="radio" name="test" class="form-check-input" value="small" checked>
-                          <img class="rounded-circle account-sm" src="{{assassin|get_player_icon}}">
-                        </label>
-                      </div>
-                    </div>
-                      <div class="row">
-                          <div class="col">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                          </div>
-                          <div class="col">
-                            <button name="{{constants.FORM_ASSASSINATE}}" type="submit" class="btn btn-primary">Confirm</button>
-                          </div>
-                      </div>
-                  </form>
-                </div>
-
+          <div class="modal-body container">
+                <p>Confirm Assassination Attempt?</p>
+                <p>Your assassin will be notified of your assassination attempt for confirmation.</p>
+            <div class="modal-footer">
+              <form method="post">
+                {% csrf_token %}
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button name="{{constants.FORM_REVERSE_ASSASSINATE}}" type="submit" class="btn btn-primary">Confirm</button>
+              </form>
             </div>
-        </div>
-        <div>
+          </div>
         </div>
       </div>
     </div>
+<!--
+    <script>
+    $(document).ready(function(){
+        $("#reverseModal").modal();
+    });
+    </script>
+-->
+
+    <style>
+      /* HIDE RADIO */
+      [type=radio] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      /* IMAGE STYLES */
+      [type=radio] + img {
+        cursor: pointer;
+      }
+
+      /* CHECKED STYLES */
+      [type=radio]:checked + img {
+        box-shadow: 0 0 3px 3px red;
+      }
+      </style>
+<br/>
+<div class="row h-100 justify-content-center align-items-center ">
+  <div class="pl-0 pr-0 col d-flex justify-content-end col-md-2">
+      <div class="badge badge-secondary">Known Assassin:</div>
   </div>
-  <!--
-  <script>
-  $(document).ready(function(){
-      $("#reverseModal").modal();
-  });
-  </script>
-  -->
-
-  <style>
-  /* HIDE RADIO */
-  [type=radio] {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  /* IMAGE STYLES */
-  [type=radio] + img {
-    cursor: pointer;
-  }
-
-  /* CHECKED STYLES */
-  [type=radio]:checked + img {
-    box-shadow: 0 0 3px 3px red;
-  }
-  </style>
-  <div class="row justify-content-center">
-    <img class="rounded-circle account-md" src="{{ assassin|get_player_icon }}">
+  <div class="pl-0 pr-0 col d-flex align-items-center justify-content-start col-md-2">
+    <img class="rounded-circle account-sm play" src="{{ player.get_assassin|get_player_icon }}"/>
+    <div class="badge ">( {{assassin.get_name}} )</div>
   </div>
-  <br/>
-  <div class="row justify-content-center align-items-center">
-    <div class="col d-flex justify-content-center">
-      <button type="submit" data-toggle="modal" data-target="#reverseModal" class="btn btn-secondary">
-        <b>Killed Assassin?</b>
-      </button>
+</div>
+    <br/>
+    <div class="row justify-content-center align-items-center">
+      <div class="col d-flex justify-content-center">
+        <button type="submit" data-toggle="modal" data-target="#reverseModal" class="btn btn-secondary">
+          <b>Reverse Assassination Attempt</b>
+        </button>
+      </div>
     </div>
-  </div>
+
 {% endif %}
 
+{% endif %}
 
 {% endblock %}

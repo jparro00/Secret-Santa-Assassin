@@ -19,6 +19,7 @@ def get_display_name(user):
             pass
     return name
 
+
 def get_player_icon(player):
     profile = player.profile
     return profile.profile.image.url
@@ -31,8 +32,10 @@ def get_status_badge(status):
         badge_class = 'badge-warning'
     elif status == constants.KILLED:
         badge_class = 'badge-danger'
+    elif status == constants.WINNER:
+        badge_class = 'badge-success'
 
-    return 'badge-danger'
+    return 'badge-secondary'
     #return badge_class
 
 register.filter('get_player', get_player)

@@ -1,5 +1,6 @@
 body {
   background: #fafafa;
+  background: #f8f8f2;
   color: #333333;
   margin-top: 0;
 }
@@ -108,7 +109,34 @@ a.article-title:hover {
   height: 300px;
   width: 300px;
 }
-.row{
+.show-down {
+  height: 100px;
+  width: 100px;
 }
-.col{
+.winner {
+  height: 300px;
+  width: 300px;
+}
+.red-border{
+  border: 2px solid red;
+}
+.green-border{
+  border: 2px solid green;
+}
+th.no-wrap {
+    white-space: nowrap;
+}
+td.no-wrap {
+    white-space: nowrap;
+}
+tr.no-wrap {
+    white-space: nowrap;
+}
+
+.table-row{
+cursor:pointer;
+}
+img.flip {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }

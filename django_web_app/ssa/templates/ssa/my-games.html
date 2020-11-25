@@ -19,19 +19,60 @@
         <h1>My Games</h1>
     </div>
     <div class="row rounded border border-secondary" style="min-height: 300px; border-width: 10px;">
-            <ul>
-                <!-- Iterate over object_list -->
+<!--
+        <div class="table-responsive">
+            <table class="table table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th class="no-wrap" scope="col"># Players</th>
+                    <th class="no-wrap" scope="col"># Active</th>
+                </tr>
+                </thead>
+                <tbody>
                 {% for game in object_list %}
-                <!-- Display Objects -->
-                <a href="{%url 'player-detail' game.id %}">{{ game.id}}</a>
-
-                <!-- If objet_list is empty  -->
-                {% empty %}
-                <li>No objects yet.</li>
+                <tr>
+                    <th class="no-wrap" scope="row">{{game.id}}</th>
+                    <td>{{game.get_name}}</td>
+                    <td>{{game.get_player_count}}</td>
+                    <td>{{game.get_active_player_count}}</td>
+                </tr>
                 {% endfor %}
-            </ul>
+                </tbody>
+            </table>
+
+        </div>
+-->
+        <div class="table-responsive rounded">
+            <table class='table table-dark table-condensed table-striped table-hover'>
+                <tr>
+                    <th class="no-wrap" scope="col">ID</th>
+                    <th class="no-wrap" scope="col">Name</th>
+                    <th class="no-wrap" scope="col"># Players</th>
+                    <th class="no-wrap" scope="col"># Active</th>
+                </tr>
+                {% for game in object_list %}
+                    {% if user in game.users.all %}
+                    <tr class="table-row" data-href="{% url 'player-detail' game.id %}">
+                        <th scope="row">{{game.id}}</th>
+                        <td class="no-wrap" >{{game.get_name}}</td>
+                        <td class="no-wrap">{{game.get_player_count}}</td>
+                        <td class="no-wrap">{{game.get_active_player_count}}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+             </table>
+        </div>
 
     </div>
 
 </div>
+<script>
+$(document).ready(function($) {
+    $(".table-row").click(function() {
+        window.document.location = $(this).data("href");
+    });
+});
+</script>
 {% endblock %}

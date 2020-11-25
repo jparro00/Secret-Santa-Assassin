@@ -40,8 +40,6 @@ class PlayerDetailView(LoginRequiredMixin, DetailView):
         player = get_player(request.user, pk)
         target = player.target
         assassin = player.get_assassin()
-        target = player
-        assassin = player
         context = {
             'player': player,
             'target': target,
@@ -62,11 +60,17 @@ class PlayerDetailView(LoginRequiredMixin, DetailView):
         if constants.FORM_ASSASSINATE in request.POST and target.status == constants.ALIVE:
             target.assassinate()
             target.save()
+        elif constants.FORM_REVERSE_ASSASSINATE in request.POST and player.knows_assassin() and assassin.status == constants.ALIVE:
+            assassin.reverse_assassinate()
+            assassin.save()
         elif constants.FORM_RETRACT_CLAIM in request.POST and target.status == constants.PENDING:
             target.revive()
             target.save()
         elif constants.FORM_REJECT_CLAIM in request.POST and player.status == constants.PENDING:
             player.known_assassin = player.get_assassin()
+            player.revive()
+            player.save()
+        elif constants.FORM_REJECT_REVERSE_CLAIM in request.POST and player.status == constants.PENDING_REVERSE:
             player.revive()
             player.save()
         elif constants.FORM_CONFIRM_CLAIM in request.POST and player.status == constants.PENDING:
