@@ -1,0 +1,12 @@
+MVP
+ - add win condition (need to show the player that won
+ - make my_games list look better
+ - add a name attribute to game object
+ - add my_games link to menu
+ - add better svg to ssa navigation bar
+ - add game creation function
+ - add reverse assassination ability
+ - add minimum players to game
+
+More
+ - add my_log page (history of kills and notes)

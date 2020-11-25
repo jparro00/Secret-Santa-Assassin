@@ -1,9 +1,47 @@
+{% extends 'ssa/base.html' %}
+{% block title%}Player{% endblock %}
+{% block content %}
+{% load ssa_extras %}
+
+<style>
+/* HIDE RADIO */
+[type=radio] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+  cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+  box-shadow: 0 0 30px red;
+}
+</style>
+<br/>
+<br/>
+<br/>
+<label>
+  <input type="radio" name="test" class="rounded-circle" value="small" checked>
+    <img class="rounded-circle account-md" src="/media/default.jpg">
+</label>
+
+<label>
+  <input type="radio" name="test" value="big">
+    <img class="rounded-circle account-md" src="/media/default.jpg">
+</label>
 <div class="container">
     <h1>Home</h1>
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Submit</button>
+        {{ form.as_p }}
+        <button type="submit" name="retract-claim">Submit</button>
     </form>
 
     <h2>{{text}}</h2>
 </div>
+{% endblock %}

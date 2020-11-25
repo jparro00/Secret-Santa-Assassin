@@ -129,5 +129,5 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'ssa-home'
+LOGIN_REDIRECT_URL = 'my-games'
 LOGIN_URL = 'login'

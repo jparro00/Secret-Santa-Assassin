@@ -85,6 +85,8 @@ a.article-title:hover {
 .account-sm {
   height: 60px;
   width: 60px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 .account-md {
   height: 90px;
@@ -101,6 +103,10 @@ a.article-title:hover {
 .icon-md {
   height: 120px;
   width: 120px;
+}
+.rip {
+  height: 300px;
+  width: 300px;
 }
 .row{
 }

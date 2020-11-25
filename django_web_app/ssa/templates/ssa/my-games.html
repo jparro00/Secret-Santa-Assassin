@@ -1,0 +1,37 @@
+{% extends 'ssa/base.html' %}
+{% block title%}Player{% endblock %}
+{% block content %}
+{% load ssa_extras %}
+
+<br/>
+<div class="container">
+    <div class="row justify-content-center">
+        <h2>
+            <span class="badge badge-primary">{{ user|get_display_name }}</span>
+        </h2>
+    </div>
+    <div class="row justify-content-center">
+        <img class="rounded-circle account-lg" src="{{ user.profile.image.url }}">
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <h1>My Games</h1>
+    </div>
+    <div class="row rounded border border-secondary" style="min-height: 300px; border-width: 10px;">
+            <ul>
+                <!-- Iterate over object_list -->
+                {% for game in object_list %}
+                <!-- Display Objects -->
+                <a href="{%url 'player-detail' game.id %}">{{ game.id}}</a>
+
+                <!-- If objet_list is empty  -->
+                {% empty %}
+                <li>No objects yet.</li>
+                {% endfor %}
+            </ul>
+
+    </div>
+
+</div>
+{% endblock %}

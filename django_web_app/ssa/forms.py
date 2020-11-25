@@ -4,4 +4,5 @@ class JoinGame(forms.Form):
    game_id = forms.CharField(max_length = 3)
 
 class TestForm(forms.Form):
-    post = forms.CharField(max_length=8)
+    #text = forms.CharField(max_length=8, widget=forms.HiddenInput())
+    text = forms.CharField(max_length=8, widget=forms.HiddenInput(), initial='valid2')

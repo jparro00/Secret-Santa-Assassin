@@ -11,6 +11,8 @@ from django.views.generic import (
     UpdateView,
     DeleteView, TemplateView,
 )
+
+from . import constants
 from .models import Game, Player
 from .forms import JoinGame, TestForm
 import operator
@@ -34,14 +36,43 @@ class PlayerDetailView(LoginRequiredMixin, DetailView):
     model = Game
     template_name = 'ssa/player.html'
 
+    def get(self, request, pk):
+        player = get_player(request.user, pk)
+        target = player.target
+        assassin = player.get_assassin()
+        target = player
+        assassin = player
+        context = {
+            'player': player,
+            'target': target,
+            'assassin': assassin,
+            'constants': constants
+        }
+
+        return render(request, self.template_name, context)
 
     def post(self, request, pk):
+
         game = Game.objects.get(pk=pk)
         user = request.user
         player = get_player(user, game)
         target = player.target
-        target.kill(player.id)
-        target.save()
+        assassin = player.get_assassin()
+
+        if constants.FORM_ASSASSINATE in request.POST and target.status == constants.ALIVE:
+            target.assassinate()
+            target.save()
+        elif constants.FORM_RETRACT_CLAIM in request.POST and target.status == constants.PENDING:
+            target.revive()
+            target.save()
+        elif constants.FORM_REJECT_CLAIM in request.POST and player.status == constants.PENDING:
+            player.known_assassin = player.get_assassin()
+            player.revive()
+            player.save()
+        elif constants.FORM_CONFIRM_CLAIM in request.POST and player.status == constants.PENDING:
+            player.kill(assassin.id)
+            player.save()
+
         return redirect('player-detail', pk)
 
 
@@ -65,15 +96,26 @@ def join(request):
 
     return render(request, 'ssa/game.html', {"game": game})
 
+class MyGamesView(LoginRequiredMixin, ListView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    model = Game
+    template_name = 'ssa/my-games.html'  # <app>/<model>_<viewtype>.html
+
+
 class TestView(TemplateView):
     template_name = 'ssa/test.html'
 
     def get(self, request):
+        #form = TestForm(initial={'text': 'valid'})
         form = TestForm()
-        return render(request, self.template_name, {'form': form })
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
-        str = request.GET.get('game', '')
-        return HttpResponse(str)
+        form = TestForm(request.POST)
+        text = "pre"
+        if form.is_valid():
+            text = form.cleaned_data['text']
+        return HttpResponse(request.COOKIES)
 
 
