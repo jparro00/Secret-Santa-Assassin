@@ -45,6 +45,13 @@ class Game(models.Model):
     def get_players(self):
         return self.player_set.all()
 
+    def get_user_count(self):
+        users = self.users.all()
+        if users is not None:
+            return len(users)
+        else:
+            return 0
+
     def get_player_count(self):
         players = self.get_players()
         if players is not None:
@@ -67,13 +74,20 @@ class Game(models.Model):
 
 
     def __str__(self):
-        return str(self.id)
+        name = self.name
+        if name is None:
+            name = str(self.id)
+        return name
 
     def get_name(self):
         name = self.name
         if name is None or name == '':
-            name = self.id
+            name = str(self.id)
         return name
+
+    def get_state(self):
+        state = self.state
+        return state
 
     #add game log for who killed who
 
@@ -131,7 +145,9 @@ class Player(models.Model):
         return name
 
     def __str__(self):
-        return self.get_name()
+        game = self.game
+        name = self.get_name() + "(pk=" + str(self.id) + " game=" + str(game.id) + ")"
+        return name
 
     def assassinate(self):
         self.status = constants.PENDING

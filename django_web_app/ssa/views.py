@@ -1,3 +1,4 @@
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import Form, BaseForm
 from django.shortcuts import render, get_object_or_404, redirect
@@ -14,9 +15,9 @@ from django.views.generic import (
 
 from . import constants
 from .models import Game, Player
-from .forms import JoinGame, TestForm
+from .forms import JoinGame, TestForm, StartGameForm
 import operator
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.staticfiles.views import serve
 
 from django.db.models import Q
@@ -104,13 +105,36 @@ class MyGamesView(LoginRequiredMixin, ListView):
     redirect_field_name = 'redirect_to'
     model = Game
     template_name = 'ssa/my-games.html'  # <app>/<model>_<viewtype>.html
+    object_list = model.objects.all()
 
+
+    def get(self, request):
+        context = {
+            'constants': constants,
+            'object_list': self.object_list,
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+
+        form = StartGameForm(request.POST)
+        user = request.user
+
+        if form.is_valid() and request.user.is_authenticated:
+            game_id = form.cleaned_data['game_id']
+            game = Game.objects.get(pk=game_id)
+
+
+        if constants.FORM_START_GAME in request.POST and game is not None and game.get_state() == constants.GAME_STATE_PENDING and user in game.users.all():
+            game.start()
+
+        return redirect('my-games')
 
 class TestView(TemplateView):
     template_name = 'ssa/test.html'
 
     def get(self, request):
-        #form = TestForm(initial={'text': 'valid'})
         form = TestForm()
         return render(request, self.template_name, {'form': form})
 
@@ -120,5 +144,21 @@ class TestView(TemplateView):
         if form.is_valid():
             text = form.cleaned_data['text']
         return HttpResponse(request.COOKIES)
+
+class GameCreate(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    model = Game
+    fields = ['name', 'state', 'users']
+    template_name = 'ssa/game_form.html'  # <app>/<model>_<viewtype>.html
+
+    def get_success_url(self):
+        return reverse('my-games')
+
+
+
+
+
+
 
 

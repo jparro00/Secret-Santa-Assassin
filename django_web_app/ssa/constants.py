@@ -14,6 +14,8 @@ FORM_CONFIRM_CLAIM = 'confirm-claim'
 FORM_REVERSE_ASSASSINATE = 'reverse-assassinate'
 FORM_REJECT_REVERSE_CLAIM = 'reject-reverse-claim'
 
+FORM_START_GAME = 'start-game'
+
 GAME_STATE_PENDING = 'Pending'
 GAME_STATE_ACTIVE = 'Active'
 GAME_STATE_ENDED = 'Ended'
