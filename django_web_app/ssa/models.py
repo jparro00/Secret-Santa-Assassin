@@ -189,6 +189,9 @@ class Player(models.Model):
         micah.save()
 
     def win(self):
+        game = self.game
+        game.state = constants.GAME_STATE_ENDED
+        game.save()
         self.status = constants.WINNER
         self.save()
 
