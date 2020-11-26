@@ -105,16 +105,13 @@ class MyGamesView(LoginRequiredMixin, ListView):
     redirect_field_name = 'redirect_to'
     model = Game
     template_name = 'ssa/my-games.html'  # <app>/<model>_<viewtype>.html
-    object_list = model.objects.all()
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['constants'] = constants
+        context['object_list'] = Game.objects.all()
+        return context
 
-    def get(self, request):
-        context = {
-            'constants': constants,
-            'object_list': self.object_list,
-        }
-
-        return render(request, self.template_name, context)
 
     def post(self, request):
 
@@ -133,6 +130,7 @@ class MyGamesView(LoginRequiredMixin, ListView):
 
 class TestView(TemplateView):
     template_name = 'ssa/test.html'
+
 
     def get(self, request):
         form = TestForm()

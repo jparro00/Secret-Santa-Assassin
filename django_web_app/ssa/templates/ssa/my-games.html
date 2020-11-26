@@ -38,7 +38,7 @@
                         <td class="no-wrap">{{game.get_user_count}}</td>
                         <td class="no-wrap">{{game.get_active_player_count}}</td>
                         <td class="no-wrap">
-                            {% if game.status == constants.GAME_STATE_PENDING %}
+                            {% if game.get_state == constants.GAME_STATE_PENDING %}
                             <form method="post">
                                 {% csrf_token %}
                                 <button name="{{constants.FORM_START_GAME}}" type="submit" class="btn btn-success">Start</button>
