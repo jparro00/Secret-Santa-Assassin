@@ -30,7 +30,7 @@
                     <th class="no-wrap" scope="col">Activate</th>
                 </tr>
                 {% for game in object_list %}
-                    {% if user in game.users.all and game.state != constants.GAME_STATE_ENDED %}
+                    {% if user in game.users.all and game.get_state != constants.GAME_STATE_ENDED %}
                     <tr class="table-row" data-href="{% url 'player-detail' game.id %}">
                         <th scope="row">{{game.id}}</th>
                         <td class="no-wrap" >{{game.get_name}}</td>
