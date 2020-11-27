@@ -12,7 +12,7 @@ from django.views.generic import (
 
 from . import constants
 from .models import Game, Player
-from .forms import JoinGame, TestForm, StartGameForm, AddForm, CreateGame
+from .forms import JoinGame, TestForm, StartGameForm, CreateGame
 from django.urls import reverse_lazy, reverse
 from .templatetags.ssa_extras import get_player
 
@@ -119,21 +119,6 @@ class MyGamesView(LoginRequiredMixin, ListView):
             game.start()
 
         return redirect('my-games')
-
-class TestView(TemplateView):
-    template_name = 'ssa/test.html'
-
-
-    def get(self, request):
-        form = AddForm()
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request):
-        form = TestForm(request.POST)
-        text = "pre"
-        if form.is_valid():
-            text = form.cleaned_data['text']
-        return HttpResponse(request.COOKIES)
 
 
 class CreateForm(object):
