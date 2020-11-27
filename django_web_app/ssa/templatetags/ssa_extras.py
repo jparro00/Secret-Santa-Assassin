@@ -24,6 +24,13 @@ def get_player_icon(player):
     profile = player.profile
     return profile.profile.image.url
 
+def get_game_row_class(game):
+    row_class = ''
+    if game.get_state() == constants.GAME_STATE_ACTIVE:
+        row_class = 'table-row'
+
+    return row_class
+
 def get_status_badge(status):
     badge_class = ""
     if status == constants.ALIVE:
@@ -42,3 +49,4 @@ register.filter('get_player', get_player)
 register.filter('get_player_icon', get_player_icon)
 register.filter('get_status_badge', get_status_badge)
 register.filter('get_display_name', get_display_name)
+register.filter('get_game_row_class', get_game_row_class)

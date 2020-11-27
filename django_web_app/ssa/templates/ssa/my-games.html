@@ -16,7 +16,12 @@
 </div>
 <div class="container">
     <div class="row">
-        <h1>My Games</h1>
+        <div class="col-10">
+            <h1>My Games</h1>
+        </div>
+        <div class="col-2 d-flex justify-content-end" style="margin:auto">
+            <a href="{% url 'game-create' %} " class="btn btn-secondary text-white"><i class="fas fa-plus"></i></a>
+        </div>
     </div>
     <div class="row rounded border border-secondary" style="min-height: 300px; border-width: 10px;">
         <div class="table-responsive rounded">
@@ -24,6 +29,7 @@
                 <tr>
                     <th class="no-wrap" scope="col">ID</th>
                     <th class="no-wrap" scope="col">Name</th>
+                    <th class="no-wrap" scope="col">Owner</th>
                     <th class="no-wrap" scope="col">Status</th>
                     <th class="no-wrap" scope="col"># Players</th>
                     <th class="no-wrap" scope="col"># Active</th>
@@ -31,14 +37,15 @@
                 </tr>
                 {% for game in object_list %}
                     {% if user in game.users.all and game.get_state != constants.GAME_STATE_ENDED %}
-                    <tr class="table-row" data-href="{% url 'player-detail' game.id %}">
+                    <tr class="{{game|get_game_row_class}}" data-href="{% url 'player-detail' game.id %}">
                         <th scope="row">{{game.id}}</th>
                         <td class="no-wrap" >{{game.get_name}}</td>
+                        <td class="no-wrap" >{{game.get_owner}}</td>
                         <td class="no-wrap" >{{game.get_state}}</td>
                         <td class="no-wrap">{{game.get_user_count}}</td>
                         <td class="no-wrap">{{game.get_active_player_count}}</td>
                         <td class="no-wrap">
-                            {% if game.get_state == constants.GAME_STATE_PENDING %}
+                            {% if game.get_state == constants.GAME_STATE_PENDING and game.get_owner == user %}
                             <form method="post">
                                 {% csrf_token %}
                                 <button name="{{constants.FORM_START_GAME}}" type="submit" class="btn btn-success">Start</button>

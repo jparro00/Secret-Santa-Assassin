@@ -1,5 +1,13 @@
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save">
-</form>
+{% extends 'ssa/base.html' %}
+{% block title%}Player{% endblock %}
+{% block content %}
+{% load ssa_extras %}
+<div class="form-group">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-primary" value="Save">
+        <a href="{% url 'my-games' %} " class="btn btn-secondary text-white">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,27 +1,19 @@
 
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms import Form, BaseForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.models import User
 from django.views.generic import (
     ListView,
     DetailView,
     CreateView,
     UpdateView,
-    DeleteView, TemplateView,
+    DeleteView, TemplateView, FormView,
 )
 
 from . import constants
 from .models import Game, Player
-from .forms import JoinGame, TestForm, StartGameForm
-import operator
+from .forms import JoinGame, TestForm, StartGameForm, AddForm, CreateGame
 from django.urls import reverse_lazy, reverse
-from django.contrib.staticfiles.views import serve
-
-from django.db.models import Q
-
 from .templatetags.ssa_extras import get_player
 
 
@@ -133,7 +125,7 @@ class TestView(TemplateView):
 
 
     def get(self, request):
-        form = TestForm()
+        form = AddForm()
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
@@ -143,11 +135,16 @@ class TestView(TemplateView):
             text = form.cleaned_data['text']
         return HttpResponse(request.COOKIES)
 
+
+class CreateForm(object):
+    pass
+
+
 class GameCreate(LoginRequiredMixin, CreateView):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
     model = Game
-    fields = ['name', 'state', 'users']
+    form_class = CreateGame
     template_name = 'ssa/game_form.html'  # <app>/<model>_<viewtype>.html
 
     def get_success_url(self):
