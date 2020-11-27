@@ -164,14 +164,11 @@ class Player(models.Model):
         self.target = None
         self.known_assassin = None
         self.save()
-        print('test')
 
         if self.game.get_active_player_count() > 1:
-            print(self.game.get_active_player_count())
             assassin.target = target
             assassin.save()
         else:
-            print('winner')
             winner = Player.objects.get(pk=killed_by)
             winner.win()
             winner.save()
