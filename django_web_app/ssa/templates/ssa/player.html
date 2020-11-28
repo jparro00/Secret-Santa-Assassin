@@ -9,13 +9,49 @@
     {{player.get_name}}
   </h1>
 </div>
-<div class="row justify-content-center">
-  <img class="rounded-circle account-lg" src="{{ player|get_player_icon }}">
+<div class="container">
+  <div class="row no-gutters justify-content-center">
+    <div class="col-4 ">
+    </div>
+    <div class="col-4 d-flex justify-content-center">
+      <img class="rounded-circle account-lg" src="{{ user.profile.image.url }}">
+    </div>
+    <div class="col-4" style="margin: auto;">
+      {% if player.get_status != constants.KILLED %}
+      <input type="image" src="/media/images/santa_crossbones.png" data-toggle="modal" data-target="#self-kill-modal" class="account-md">
+      {% endif %}
+    </div>
+  </div>
 </div>
 <div class="row justify-content-center">
   <h3>
     <span class="badge {{player.get_badge_class}}">{{player.status}}</span>
   </h3>
+</div>
+
+<div class="modal fade" id="self-kill-modal" tabindex="-1" role="dialog" aria-labelledby="self-kill-modal-label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="self-kill-modal-label">Self Report Death</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body container">
+        <p>Are you sure you want to self report your own death?</p>
+        <p>Clicking confirm will immediately kill you and your assassin will be attributed with the kill.</p>
+        <div class="modal-footer">
+          <form method="post">
+            {% csrf_token %}
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Just Kidding!</button>
+            <button name="{{constants.FORM_SELF_KILL}}" type="submit" class="btn btn-danger">Yes, I'm really dead</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 <br/>
 {% if player.status == constants.KILLED %}
@@ -187,15 +223,23 @@
             on their device</p>
           <i>
             <br/>
+            <p>
             <i></i><b>Didn't attempt an assassination?</b></i>
             <br/>
             Slow down there bucko! by clicking confirm you reveal yourself to your target and open up the
-            opportunity for them to assassinate you!</p>
+            opportunity for them to assassinate you!
+            </p>
+            <p>
+            <i></i><b>Attempted assassination but missed?</b></i>
+            <br/>
+            If you attempted to assassinate your target but missed, click I Missed
+            </p>
         </div>
         <div class="modal-footer">
           <form method="post">
             {% csrf_token %}
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button name="{{constants.FORM_MISS}}" type="submit" class="btn btn-danger">I Missed!</button>
             <button name="{{constants.FORM_ASSASSINATE}}" type="submit" class="btn btn-primary">Confirm</button>
           </form>
         </div>

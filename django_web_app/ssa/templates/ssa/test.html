@@ -1,2 +1,21 @@
-{% load static %}
+{% extends 'ssa/base.html' %}
+{% block title%}Player{% endblock %}
+{% block content %}
+{% load ssa_extras %}
 
+<div class="container">
+  <div class="row no-gutters green-border justify-content-center">
+    <div class="red-border col-4 ">
+    </div>
+    <div class="red-border col-4 d-flex justify-content-center">
+      <img class="rounded-circle account-lg" src="{{ user.profile.image.url }}">
+    </div>
+    <div class="red-border col-4" style="margin: auto;">
+      <a href="#">
+        <img class="account-md" src="/media/images/santa_crossbones.png">
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

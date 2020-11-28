@@ -102,11 +102,15 @@ class Player(models.Model):
     profile = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     known_assassin = models.ForeignKey('self',on_delete=models.SET(''), null=True, default='', blank=True, related_name='player_known_assassin')
 
+    def set_known_assassin(self, player):
+        self.known_assassin = player
+        self.save()
+
     def knows_assassin(self):
         if self.get_target() is not None and self.get_target() == self.get_assassin():
             return True
         if self.known_assassin is not None and self.known_assassin != '':
-            if self.known_assassin.status is not constants.KILLED:
+            if self.known_assassin.status != constants.KILLED:
                 return True
             else:
                 self.known_assassin = None

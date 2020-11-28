@@ -13,6 +13,8 @@ FORM_REJECT_CLAIM = 'reject-claim'
 FORM_CONFIRM_CLAIM = 'confirm-claim'
 FORM_REVERSE_ASSASSINATE = 'reverse-assassinate'
 FORM_REJECT_REVERSE_CLAIM = 'reject-reverse-claim'
+FORM_MISS = 'miss'
+FORM_SELF_KILL = 'self-kill'
 
 FORM_START_GAME = 'start-game'
 

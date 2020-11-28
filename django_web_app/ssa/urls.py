@@ -15,6 +15,6 @@ urlpatterns = [
     path('<int:pk>', GameDetailView.as_view(), name='game-home'),
     path('my-game/<int:pk>', PlayerDetailView.as_view(), name='player-detail'),
     path('connection/', TemplateView.as_view(template_name='ssa/test.html')),
-    #url(r'^test/$', views.TestView.as_view(), name='test'),
+    url(r'^test/$', views.TestView.as_view(), name='test'),
     url(r'^my_games/$', MyGamesView.as_view(), name='my-games'),
 ]

@@ -69,6 +69,13 @@ class PlayerDetailView(LoginRequiredMixin, DetailView):
         elif constants.FORM_CONFIRM_CLAIM in request.POST and (player.status == constants.PENDING or player.status == constants.PENDING_REVERSE):
             player.kill(assassin.id)
             player.save()
+        elif constants.FORM_SELF_KILL in request.POST and player.status != constants.KILLED:
+            #TODO: this logic is not correct, player didn't kill themselves
+            player.kill(player.id)
+            player.save()
+        elif constants.FORM_MISS in request.POST and player.status != constants.KILLED and target.status == constants.ALIVE:
+            target.set_known_assassin(player)
+            target.save()
         return redirect('player-detail', pk)
 
 
@@ -135,6 +142,8 @@ class GameCreate(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('my-games')
 
+class TestView(TemplateView):
+    template_name = 'ssa/test.html'
 
 
 
