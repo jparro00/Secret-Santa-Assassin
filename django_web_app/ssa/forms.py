@@ -21,7 +21,7 @@ class CreateGame(forms.ModelForm):
         #fields = '__all__'
 
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'test'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
             'users': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'owner': forms.Select(attrs={'class': 'form-control'}),
         }
