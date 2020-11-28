@@ -2,6 +2,7 @@ from django import template
 from django.urls import reverse
 
 from ssa import constants
+from ssa.models import Player
 
 register = template.Library()
 
@@ -32,8 +33,11 @@ def get_game_row_class(game):
 
 def get_game_row_href(game, user):
     href = ''
-    player = get_player(user, game)
-    status = player.status
+    try:
+        player = get_player(user, game)
+        status = player.status
+    except Player.DoesNotExist:
+        status = ''
 
     if status == constants.KILLED:
         href = '/ssa/game-status/' + str(game.id)
