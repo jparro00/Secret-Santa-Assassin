@@ -17,7 +17,7 @@
       <img class="rounded-circle account-lg" src="{{ user.profile.image.url }}">
     </div>
     <div class="col-4" style="margin: auto;">
-      {% if player.get_status != constants.KILLED %}
+      {% if player.status != constants.KILLED %}
       <input type="image" src="/media/images/santa_crossbones.png" data-toggle="modal" data-target="#self-kill-modal" class="account-md">
       {% endif %}
     </div>
