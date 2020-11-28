@@ -37,7 +37,7 @@
                 </tr>
                 {% for game in object_list %}
                     {% if user in game.users.all and game.get_state != constants.GAME_STATE_ENDED %}
-                    <tr class="{{game|get_game_row_class}}" data-href="{% url 'player-detail' game.id %}">
+                    <tr class="{{game|get_game_row_class}}" data-href="{{game|get_game_row_href:user}}">
                         <th scope="row">{{game.id}}</th>
                         <td class="no-wrap" >{{game.get_name}}</td>
                         <td class="no-wrap" >{{game.get_owner}}</td>

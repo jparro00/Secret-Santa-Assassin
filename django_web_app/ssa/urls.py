@@ -3,7 +3,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 from .views import (
-    GameDetailView, PlayerDetailView, MyGamesView, GameCreate
+    GameDetailView, PlayerDetailView, MyGamesView, GameCreate, GameStatusView
 )
 from . import views
 
@@ -15,6 +15,7 @@ urlpatterns = [
     path('<int:pk>', GameDetailView.as_view(), name='game-home'),
     path('my-game/<int:pk>', PlayerDetailView.as_view(), name='player-detail'),
     path('connection/', TemplateView.as_view(template_name='ssa/test.html')),
-    url(r'^test/$', views.TestView.as_view(), name='test'),
-    url(r'^my_games/$', MyGamesView.as_view(), name='my-games'),
+    path('test/<int:pk>/', views.TestView.as_view(), name='test'),
+    url(r'^my-games/$', MyGamesView.as_view(), name='my-games'),
+    path('game-status/<int:pk>/', GameStatusView.as_view(), name='game-status'),
 ]

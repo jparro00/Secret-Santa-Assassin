@@ -1,4 +1,5 @@
 from django import template
+from django.urls import reverse
 
 from ssa import constants
 
@@ -29,6 +30,18 @@ def get_game_row_class(game):
 
     return row_class
 
+def get_game_row_href(game, user):
+    href = ''
+    player = get_player(user, game)
+    status = player.status
+
+    if status == constants.KILLED:
+        href = '/ssa/game-status/' + str(game.id)
+    else:
+        href = '/ssa/my-game/' + str(game.id)
+
+    return href
+
 def get_status_badge(status):
     badge_class = ""
     if status == constants.ALIVE:
@@ -48,3 +61,4 @@ register.filter('get_player_icon', get_player_icon)
 register.filter('get_status_badge', get_status_badge)
 register.filter('get_display_name', get_display_name)
 register.filter('get_game_row_class', get_game_row_class)
+register.filter('get_game_row_href', get_game_row_href)

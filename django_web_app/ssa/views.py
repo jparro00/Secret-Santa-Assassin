@@ -140,8 +140,19 @@ class GameCreate(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('my-games')
 
-class TestView(TemplateView):
+class GameStatusView(LoginRequiredMixin, DetailView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    model = Game
+    template_name = 'ssa/game-status.html'
+
+class TestView(LoginRequiredMixin, DetailView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    model = Game
     template_name = 'ssa/test.html'
+
+
 
 
 
