@@ -29,18 +29,20 @@ class PlayerDetailView(LoginRequiredMixin, DetailView):
     model = Game
     template_name = 'ssa/player.html'
 
-    def get(self, request, pk):
-        player = get_player(request.user, pk)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        game = context['game']
+        player = get_player(user, game.id)
         target = player.target
         assassin = player.get_assassin()
-        context = {
-            'player': player,
-            'target': target,
-            'assassin': assassin,
-            'constants': constants
-        }
 
-        return render(request, self.template_name, context)
+        context['player'] = player
+        context['target'] = target
+        context['assassin'] = assassin
+        context['constants'] = constants
+
+        return context
 
     def post(self, request, pk):
 
