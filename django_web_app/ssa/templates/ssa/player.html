@@ -20,7 +20,9 @@
       <img class="rounded-circle account-lg" src="{{ user.profile.image.url }}">
     </div>
     <div class="col-4" style="margin: auto;">
+      {% if player.status != constants.KILLED %}
       <a href="{% url 'player-detail' game.id %}" class="btn text-primary fas fa-sync-alt" style="font-size: 60px;"></a>
+      {% endif %}
     </div>
   </div>
 </div>
