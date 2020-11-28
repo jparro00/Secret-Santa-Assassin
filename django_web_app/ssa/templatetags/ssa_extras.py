@@ -15,10 +15,8 @@ def get_display_name(user):
     if profile is not None:
         handle = profile.handle
         if handle is not None and handle != '':
-            #name = handle
-            pass
+            name = handle
     return name
-
 
 def get_player_icon(player):
     profile = player.profile

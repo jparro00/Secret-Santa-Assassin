@@ -80,13 +80,11 @@ class PlayerDetailView(LoginRequiredMixin, DetailView):
             target.save()
         return redirect('player-detail', pk)
 
-
 class HomeView(LoginRequiredMixin,ListView):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
     model = Game
     template_name = 'ssa/home.html'  # <app>/<model>_<viewtype>.html
-
 
 def join(request):
     if request.method == "POST":
@@ -129,10 +127,8 @@ class MyGamesView(LoginRequiredMixin, ListView):
 
         return redirect('my-games')
 
-
 class CreateForm(object):
     pass
-
 
 class GameCreate(LoginRequiredMixin, CreateView):
     login_url = '/login/'

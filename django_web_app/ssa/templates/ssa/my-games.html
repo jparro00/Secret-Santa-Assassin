@@ -6,9 +6,9 @@
 <br/>
 <div class="container">
     <div class="row justify-content-center">
-        <h2>
-            <span class="badge badge-primary">{{ user|get_display_name }}</span>
-        </h2>
+        <h1>
+            {{user|get_display_name}}
+        </h1>
     </div>
     <div class="row justify-content-center">
         <img class="rounded-circle account-lg" src="{{ user.profile.image.url }}">
