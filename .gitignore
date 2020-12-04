@@ -3,3 +3,6 @@
 **/__pycache__
 **/profile_pics/*
 **/migrations/*
+
+# exception to the rule
+!profile_pics/.gitkeep 
