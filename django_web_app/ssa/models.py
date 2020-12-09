@@ -97,9 +97,9 @@ class Game(models.Model):
 
 class Player(models.Model):
     status = models.CharField(max_length=24)
-    target = models.ForeignKey('self', on_delete=models.CASCADE,default=1, null=True, blank=True)
-    game = models.ForeignKey('Game', blank=True, on_delete=models.CASCADE,default=1)
-    profile = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    target = models.ForeignKey('self', on_delete=models.CASCADE,null=True, blank=True)
+    game = models.ForeignKey('Game', blank=True, on_delete=models.CASCADE)
+    profile = models.ForeignKey(User, on_delete=models.CASCADE)
     known_assassin = models.ForeignKey('self',on_delete=models.SET(''), null=True, default='', blank=True, related_name='player_known_assassin')
 
     def set_known_assassin(self, player):
