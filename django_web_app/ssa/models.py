@@ -182,7 +182,7 @@ class Player(models.Model):
             assassin.target = target
             assassin.save()
         else:
-            winner = Player.objects.get(pk=killed_by)
+            winner = assassin
             winner.win()
             winner.save()
 

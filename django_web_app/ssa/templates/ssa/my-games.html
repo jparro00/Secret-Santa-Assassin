@@ -20,7 +20,9 @@
             <h1><b>My Games</b></h1>
         </div>
         <div class="col-2 d-flex justify-content-end" style="margin:auto">
+            {% if user.is_staff %}
             <a href="{% url 'game-create' %} " class="btn btn-secondary text-white"><i class="fas fa-plus"></i></a>
+            {% endif %}
         </div>
     </div>
     <div class="row rounded border border-secondary" style="min-height: 300px; border-width: 10px;">
@@ -36,7 +38,7 @@
                     <th class="no-wrap" scope="col">Activate</th>
                 </tr>
                 {% for game in object_list %}
-                    {% if user in game.users.all and game.get_state != constants.GAME_STATE_ENDED %}
+                    {% if user in game.users.all %}
                     <tr class="{{game|get_game_row_class}}" data-href="{{game|get_game_row_href:user}}">
                         <th scope="row">{{game.id}}</th>
                         <td class="no-wrap" >{{game.get_name}}</td>

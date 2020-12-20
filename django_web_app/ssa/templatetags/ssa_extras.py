@@ -26,8 +26,9 @@ def get_player_icon(player):
 
 def get_game_row_class(game):
     row_class = ''
-    if game.get_state() == constants.GAME_STATE_ACTIVE:
-        row_class = 'table-row'
+    #if game.get_state() == constants.GAME_STATE_ACTIVE:
+    #    row_class = 'table-row'
+    row_class = 'table-row'
 
     return row_class
 
