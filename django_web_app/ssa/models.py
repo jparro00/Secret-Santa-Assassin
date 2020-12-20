@@ -14,7 +14,7 @@ class Game(models.Model):
     name = models.CharField(max_length=24, unique=True, null=True)
     state = models.CharField(max_length=24, default=constants.GAME_STATE_PENDING)
     users = models.ManyToManyField(User)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1, related_name='game_owner')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='game_owner')
 
     def start(self):
         users = list(self.users.all())
