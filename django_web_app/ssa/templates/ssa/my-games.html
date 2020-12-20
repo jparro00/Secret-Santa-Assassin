@@ -5,9 +5,9 @@
 
 <br/>
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center xmas-font">
         <h1>
-            {{user|get_display_name}}
+            <b>{{user|get_display_name}}</b>
         </h1>
     </div>
     <div class="row justify-content-center">
@@ -15,9 +15,9 @@
     </div>
 </div>
 <div class="container">
-    <div class="row">
+    <div class="row xmas-font">
         <div class="col-10">
-            <h1>My Games</h1>
+            <h1><b>My Games</b></h1>
         </div>
         <div class="col-2 d-flex justify-content-end" style="margin:auto">
             <a href="{% url 'game-create' %} " class="btn btn-secondary text-white"><i class="fas fa-plus"></i></a>

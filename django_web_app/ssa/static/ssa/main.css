@@ -106,8 +106,8 @@ a.article-title:hover {
   width: 120px;
 }
 .rip {
-  height: 300px;
-  width: 300px;
+  height: 250px;
+  width: 250px;
 }
 .show-down {
   height: 100px;
@@ -139,4 +139,22 @@ cursor:pointer;
 img.flip {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
+}
+.xmas-font {
+    font-family: 'Mountains of Christmas';
+}
+.badge {
+    font-family: 'Mountains of Christmas';
+}
+.btn-danger{
+    font-family: 'Mountains of Christmas';
+}
+.btn-primary{
+    font-family: 'Mountains of Christmas';
+}
+.btn-secondary{
+    font-family: 'Mountains of Christmas';
+}
+.btn-warning{
+    font-family: 'Mountains of Christmas';
 }

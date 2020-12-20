@@ -29,26 +29,35 @@
 </style>
 
 <br/>
-<div class="container">
+<div class="container xmas-font">
   <div class="row justify-content-center">
     <h1>
-      {{game.name}}
+      <b>
+        {{game.name}}
+      </b>
     </h1>
   </div>
   <div class="row justify-content-center">
     {% with player=user|get_player:game %}
     {% if player.status == 'Killed' %}
     <img class="account-lg" src="/media/images/RIP.png">
+  </div>
+  <div class="row justify-content-center">
+    <span class="xmas-font"><b>Open your gift #{{player.get_gift_id}}</b></span>
     {% else %}
     <img class="rounded-circle account-lg" src="{{ user.profile.image.url }}">
     {% endif %}
     {% endwith %}
   </div>
 </div>
-<div class="container">
+<div class="container xmas-font">
   <div class="row">
     <div class="col-10">
-      <h1>Player Status</h1>
+      <h1>
+        <b>
+          Player Status
+        </b>
+      </h1>
     </div>
   </div>
   <div class="row rounded border border-secondary" style="min-height: 300px; border-width: 10px;">
@@ -64,7 +73,9 @@
               <img class="rounded-circle account-md image-overlay" src="/media/images/killed.png">
               {% endif %}
                 <div class="text-overlay text-white">
+                  <b>
                     {{player.get_name}}
+                  </b>
                 </div>
             </div>
           </div>

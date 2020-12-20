@@ -4,9 +4,11 @@
 {% load ssa_extras %}
 
 <br/>
-<div class="row justify-content-center">
+<div class="row justify-content-center xmas-font">
   <h1>
+  <b>
     {{user|get_display_name}}
+  </b>
   </h1>
 </div>
 <div class="container">
@@ -58,6 +60,21 @@
 </div>
 <br/>
 {% if player.status == constants.KILLED %}
+<div class="container">
+<div class="row h-100 justify-content-center align-items-center ">
+  <div class="col d-flex justify-content-center">
+      <span class="xmas-font">
+        <h4>
+            You're dead, but the good news is that you get to open your gift now!
+          <br/>
+          <br/>
+          <i class="fas fa-gift"></i>
+          <b>Open your gift #{{player.get_gift_id}}</b>
+        </h4>
+      </span>
+  </div>
+</div>
+</div>
   <div class="row h-100 justify-content-center align-items-center ">
     <div class="pl-0 pr-0 col d-flex justify-content-center">
       <img id="rip" class="rip" src="/media/images/RIP.png">
@@ -321,7 +338,7 @@
   </div>
   <div class="pl-0 pr-0 col d-flex align-items-center justify-content-start col-md-2">
     <img class="rounded-circle account-sm play" src="{{ player.get_assassin|get_player_icon }}"/>
-    <div class="badge ">( {{assassin.get_name}} )</div>
+    <div class="xmas-font"><b>({{assassin.get_name}})</b></div>
   </div>
 </div>
     <br/>

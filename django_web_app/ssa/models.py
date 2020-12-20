@@ -102,6 +102,11 @@ class Player(models.Model):
     profile = models.ForeignKey(User, on_delete=models.CASCADE)
     known_assassin = models.ForeignKey('self',on_delete=models.SET(''), null=True, default='', blank=True, related_name='player_known_assassin')
 
+    def get_gift_id(self):
+        profile = self.profile.profile
+        gift_id = profile.gift_id
+        return gift_id
+
     def set_known_assassin(self, player):
         self.known_assassin = player
         self.save()
